@@ -12,6 +12,7 @@ import SideBar from "../views/sidenavbar/sidebar";
 import LoginPage from "./loginpage";
 import Registor from "./registor";
 import UserManagement from "../views/adminSetting/userManagement"
+import Layout from '../views/layout';
 
 export default class MainRoute extends Component {
     constructor(){
@@ -69,11 +70,11 @@ export default class MainRoute extends Component {
     console.log('warining hiited',a)
   }
 
-  getPath=(path)=>{
+  getPath=async (path)=> {
     debugger;
-    this.setState({
-      pathBool:true,
-      locate:path
+  await  this.setState({
+          pathBool:true,
+          locate:path
     })
   }
 
@@ -115,6 +116,7 @@ export default class MainRoute extends Component {
             return (
                 <div>
                   <Router>
+                    <SideBar   pathDynamic={this.getPath}>
                     <Switch>
                      <Route path="/" exact>
                         {this.state.isAuthenticated ? (
@@ -123,24 +125,46 @@ export default class MainRoute extends Component {
                             <LoginPage authLogin={this.loginAutenticate} check={this.wrongEmailPassword}/>
                         )}
                       </Route>  
-                       <ProtectedRoute
+                       {/* <ProtectedRoute
                         isAuthenticated={this.state.isAuthenticated}
                         path={this.state.pathBool ? this.state.locate : "/dashboard" }
                         logout={this.logout}
                         component={SideBar}
                         pathDynamic={this.getPath}
-                      /> 
+                      />  */}
                        <ProtectedRoute
                         isAuthenticated={this.state.isAuthenticated}
-                        path={this.state.locate}
+                        path="/dashboard"
                         logout={this.logout}
                         component={SideBar}
                         pathDynamic={this.getPath}
                       />  
+                      <ProtectedRoute
+                        isAuthenticated={this.state.isAuthenticated}
+                        path="/home"
+                        logout={this.logout}
+                        component={SideBar}
+                        pathDynamic={this.getPath}
+                      />
+                       <ProtectedRoute
+                        isAuthenticated={this.state.isAuthenticated}
+                        path="/procurement"
+                        logout={this.logout}
+                        component={SideBar}
+                        pathDynamic={this.getPath}
+                      />
+                       <ProtectedRoute
+                        isAuthenticated={this.state.isAuthenticated}
+                        path="/profile"
+                        logout={this.logout}
+                        component={SideBar}
+                        pathDynamic={this.getPath}
+                      />
                       <Route path="*">
                         <div>404 Not found </div>
                       </Route> 
                     </Switch>
+                    </SideBar>
                   </Router> 
                 </div>
               );

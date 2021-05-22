@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -21,8 +22,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import "./sidebar.css";
-import dropdown from "../../data/dropdown";
+import "./layout.css";
+import dropdown from "../data/dropdown";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -30,145 +31,147 @@ import HomeIcon from '@material-ui/icons/Home';
 import Icon from '@material-ui/core/Icon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
-import UserManagement from "../adminSetting/userManagement";
-import SideNavigate from "../../component/sideNavigate";
-import userData from "../../data/userData";
-import Product from "../../views/adminSetting/productcateogory";
+import UserManagement from "../views/adminSetting/userManagement";
+import SideNavigate from "../component/sideNavigate";
+import userData from "../data/userData";
+import Product from "../views/adminSetting/productcateogory";
 import { useGridApiOptionHandler } from '@material-ui/data-grid';
 import { useHistory } from "react-router";
 import {withRouter} from "react-router"
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    background: '#fff',
-    color: "black",
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    background: '#fff',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  btn: {
-    color: "#424949",
-  }
-}));
 
-function Sidenav(props) {
-  const classes = useStyles();
-  const history = useHistory();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [menuName, setMenuName] = React.useState(false);
-  const [sidenavControl, setSideNavControl] = React.useState([]);
-  const [dropdownPath, setDropdownPath] = React.useState('');
-  const [dropdownoptions, setDropdownOptions] = React.useState(dropdown)
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [linkPath, setLinkPath] = React.useState('');
-  const [age, setAge] = React.useState(false);
-  const [dummy,setDummy] = React.useState(false);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (type) => {
-    setAnchorEl(null);
-    console.log('type', type);
-  };
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleSideLinks = (path) => {
-    setLinkPath(path)
-    props.pathDynamic(path)
-    history.push(path)
-  }
-  useEffect(() => {
-    debugger;
-    // props.pathDynamic(dropdownPath)
-    console.log('hiited');
-    setAge(false)
-    
-  },[age]);
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const handlesideBar = async (children, name, path) => {
-    debugger;
-    setAnchorEl(null);
-    console.log("children", children)
-    await setSideNavControl(old => children
-    )
-    setMenuName(name);
-    await setDropdownPath(path);
-     props.pathDynamic(path);
-     history.push(path);
-     setAge(true);
-    console.log("path", dropdownPath);
-  }
-  const checkDelt = (children,name,path) =>{
-    debugger;
-    setAge("hii")
-    
-  }
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+function Layout({children,pathDynamic}) {
+  
+    const history = useHistory();
+    const theme = useTheme();
+    const [open, setOpen] = React.useState(false);
+    const [menuName, setMenuName] = React.useState(false);
+    const [sidenavControl, setSideNavControl] = React.useState([]);
+    const [dropdownPath, setDropdownPath] = React.useState('');
+    const [dropdownoptions, setDropdownOptions] = React.useState(dropdown)
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [linkPath, setLinkPath] = React.useState('');
+    const [age, setAge] = React.useState(false);
+    const [dummy,setDummy] = React.useState(false);
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          display: 'flex',
+        },
+        appBar: {
+          background: '#fff',
+          color: "black",
+          zIndex: theme.zIndex.drawer + 1,
+          transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+        },
+        appBarShift: {
+          marginLeft: drawerWidth,
+          width: `calc(100% - ${drawerWidth}px)`,
+          transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        },
+        menuButton: {
+          marginRight: 36,
+        },
+        hide: {
+          display: 'none',
+        },
+        drawer: {
+          width: drawerWidth,
+          flexShrink: 0,
+          whiteSpace: 'nowrap',
+        },
+        drawerOpen: {
+          background: '#fff',
+          width: drawerWidth,
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        },
+        drawerClose: {
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+          overflowX: 'hidden',
+          width: theme.spacing(7) + 1,
+          [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(9) + 1,
+          },
+        },
+        toolbar: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          padding: theme.spacing(0, 1),
+          // necessary for content to be below app bar
+          ...theme.mixins.toolbar,
+        },
+        content: {
+          flexGrow: 1,
+          padding: theme.spacing(3),
+        },
+        btn: {
+          color: "#424949",
+        }
+      }));
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = (type) => {
+      setAnchorEl(null);
+      console.log('type', type);
+    };
+  
+    const handleDrawerOpen = () => {
+      setOpen(true);
+    };
+    const handleSideLinks = (path) => {
+      setLinkPath(path)
+      pathDynamic(path)
+      history.push(path)
+    }
+    useEffect(() => {
+      debugger;
+      // props.pathDynamic(dropdownPath)
+      console.log('hiited');
+      setAge(false)
+      
+    },[age]);
+  
+    const handleDrawerClose = () => {
+      setOpen(false);
+    };
+    const handlesideBar = async (children, name, path) => {
+      debugger;
+      setAnchorEl(null);
+      console.log("children", children)
+      await setSideNavControl(old => children
+      )
+      setMenuName(name);
+      await setDropdownPath(path);
+       pathDynamic(path);
+       history.push(path);
+       setAge(true);
+      console.log("path", dropdownPath);
+    }
+    const checkDelt = (children,name,path) =>{
+      debugger;
+      setAge("hii")
+      
+    }
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
+    const classes = useStyles();
+          
   return (
     <BrowserRouter>
       <div className={classes.root}>
@@ -259,9 +262,9 @@ function Sidenav(props) {
             {sidenavControl.map((side, index) => {
               return (
                 <div>
-                  <ListItem button key={side.id}>
+                  <ListItem button key={side.id} onClick={() => handleSideLinks(side.path)}>
                     <ListItemIcon>{index % 2 === 0 ? <FontAwesomeIcon icon={side.icons} /> : <FontAwesomeIcon icon={side.icons} />}</ListItemIcon>
-                    <ListItemText onClick={() => handleSideLinks(side.path)}>{side.name}</ListItemText>
+                    <ListItemText>{side.name}</ListItemText>
 
                     {/* <ListItemText><Link to={dropdownPath + side.path} onClick={()=>handleSideLinks(side.path)} className="menulist">{side.name}</Link></ListItemText> */}
                   </ListItem>
@@ -276,15 +279,23 @@ function Sidenav(props) {
           <div className={classes.toolbar} />
           {/* <CovidTracker/> */}
           <Switch>
-            {linkPath == "" ? null : <Route path={dropdownPath}>
+            {<Route path={dropdownPath}>
               <UserManagement />
 
             </Route>}
-
+            <div>
+                {children}
+            </div>
           </Switch>
         </main>
       </div>
     </BrowserRouter>
   );
+            
+            
+           
+        
+  
 }
-export default withRouter(Sidenav);
+
+export default Layout;
